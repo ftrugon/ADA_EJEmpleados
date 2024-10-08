@@ -1,16 +1,20 @@
 package org.example
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    println("Hello, " + name + "!")
+import java.io.File
 
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
+fun main() {
+
+    val csvPath = File("C:\\Users\\fran\\IdeaProjects\\ADA_EJEmpleados\\src\\main\\resources\\empleados.csv")
+    val fileManager = FileRepository(csvPath)
+
+    val XMLPath = File("C:\\Users\\fran\\IdeaProjects\\ADA_EJEmpleados\\src\\main\\resources\\empleados.xml")
+    val XMLManager = XMLRepository(XMLPath)
+
+    XMLManager.writeEmployeeList(fileManager.readCSV())
+
+    XMLManager.modifyEmployee(1,5000f)
+
+    XMLManager.readXML().forEach {
+        println("ID: ${it.id}, Apellido: ${it.apellido}, Departamento: ${it.departamento}, Salario: ${it.salario}")
     }
 }
