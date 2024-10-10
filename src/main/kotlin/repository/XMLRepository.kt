@@ -1,5 +1,6 @@
-package org.example
+package org.example.repository
 
+import org.example.model.Empleado
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import java.io.File
@@ -8,7 +9,6 @@ import javax.xml.transform.OutputKeys
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
-import kotlin.coroutines.CoroutineContext
 
 class XMLRepository(
     val XMLPath : File
@@ -28,12 +28,16 @@ class XMLRepository(
             if(nodo.nodeType == Node.ELEMENT_NODE){
                 val nodoElemeto = nodo as Element
 
-                val textId = nodoElemeto.getElementsByTagName("id").item(0).textContent.toInt()
+
+
+                //val textId = nodoElemeto.getElementsByTagName("id").item(0).textContent.toInt()
+
+                val textId = nodoElemeto.getAttribute("id")
                 val textApellido = nodoElemeto.getElementsByTagName("apellido").item(0).textContent
                 val textDepart = nodoElemeto.getElementsByTagName("departamento").item(0).textContent
                 val textSalario = nodoElemeto.getElementsByTagName("salario").item(0).textContent.toFloat()
 
-                listToReturn.add(Empleado(textId,textApellido,textDepart,textSalario))
+                listToReturn.add(Empleado(textId.toInt(), textApellido, textDepart, textSalario))
             }
         }
         return listToReturn
@@ -48,24 +52,25 @@ class XMLRepository(
         employeeList.forEach{ emple ->
 
             val empleado = document.createElement("empleado")
+            empleado.setAttribute("id",emple.id.toString())
             document.documentElement.appendChild(empleado)
 
-            val id = document.createElement("id")
+            //val id = document.createElement("id")
             val apellido = document.createElement("apellido")
             val departamento = document.createElement("departamento")
             val salario = document.createElement("salario")
 
-            val textId = document.createTextNode(emple.id.toString())
+            //val textId = document.createTextNode(emple.id.toString())
             val textApellido = document.createTextNode(emple.apellido)
             val textDepart = document.createTextNode(emple.departamento)
             val textSalario = document.createTextNode(emple.salario.toString())
 
-            id.appendChild(textId)
+            //id.appendChild(textId)
             apellido.appendChild(textApellido)
             departamento.appendChild(textDepart)
             salario.appendChild(textSalario)
 
-            empleado.appendChild(id)
+            //empleado.appendChild(id)
             empleado.appendChild(apellido)
             empleado.appendChild(departamento)
             empleado.appendChild(salario)
@@ -91,6 +96,12 @@ class XMLRepository(
         }
 
         writeEmployeeList(employees)
+    }
+
+    fun showEmplyees(){
+        readXML().forEach {
+            println("ID: ${it.id}, Apellido: ${it.apellido}, Departamento: ${it.departamento}, Salario: ${it.salario}")
+        }
     }
 
 }

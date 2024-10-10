@@ -1,5 +1,6 @@
-package org.example
+package org.example.repository
 
+import org.example.model.Empleado
 import java.io.File
 import java.nio.file.Files
 
@@ -16,7 +17,14 @@ class FileRepository(val PathToRead: File) {
 
             if (linea.isNotEmpty() && linea.isNotBlank()){
                 val splitedLine = linea.split(",")
-                listToReturn.add(Empleado(splitedLine[0].toInt(),splitedLine[1],splitedLine[2],splitedLine[3].toFloat()))
+                listToReturn.add(
+                    Empleado(
+                        splitedLine[0].toInt(),
+                        splitedLine[1],
+                        splitedLine[2],
+                        splitedLine[3].toFloat()
+                    )
+                )
             }
 
         }

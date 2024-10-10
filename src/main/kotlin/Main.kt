@@ -1,5 +1,7 @@
 package org.example
 
+import org.example.repository.FileRepository
+import org.example.repository.XMLRepository
 import java.io.File
 
 fun main() {
@@ -12,9 +14,9 @@ fun main() {
 
     XMLManager.writeEmployeeList(fileManager.readCSV())
 
-    XMLManager.modifyEmployee(1,5000f)
+    XMLManager.modifyEmployee(2,5000f)
 
-    XMLManager.readXML().forEach {
-        println("ID: ${it.id}, Apellido: ${it.apellido}, Departamento: ${it.departamento}, Salario: ${it.salario}")
-    }
+
+    XMLManager.showEmplyees()
+
 }
